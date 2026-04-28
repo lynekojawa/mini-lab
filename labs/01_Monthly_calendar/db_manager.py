@@ -31,3 +31,7 @@ def add_calendar_entry(date_key, status, content):
 def delete_calendar_entry(entry_id):
     db = get_db_client()
     return db.table("calendar_data").delete().eq("id", entry_id).execute()
+
+def update_entry_status(entry_id, new_status):
+    db = get_db_client()
+    return db.table("calendar_data").update({"status": new_status}).eq("id",entry_id).execute()

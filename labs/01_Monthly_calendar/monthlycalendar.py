@@ -1,11 +1,12 @@
-#Today(4/27) We are continuing the montly calendar there are some known error I found
-#1. cannot put more than 2 inputs Not yet
-#2. I personally feel annoys this listed on the top V
-#3. wanted to add next month and previous calendar V
+#Today(4/28) We are going to finish this
+#1. cannot put more than 2 inputs Not yetV
+#2. make sure I can use this in personal storage(private0
+#3. Check SQL, Monthly calendar, db mangerV
+#4. Adding organizer=1.memo 2. to-do 3. done in order plus changing to-do to done
 
 import streamlit as st
 import calendar
-from db_manager import fetch_calendar_state, get_db_client, add_calendar_entry, delete_calendar_entry
+from db_manager import fetch_calendar_state, get_db_client, add_calendar_entry, delete_calendar_entry, update_entry_status
 from datetime import date
 from collections import defaultdict
 
@@ -33,11 +34,6 @@ STATUS_COLORS = {
 
 def get_status_color(status):
     return STATUS_COLORS.get(status, "#FFFFFF")
-
-def delete_calendar_data(date_key):
-    db = get_db_client()
-    return db.table("calendar_data").delete().eq("date_key", date_key).execute()
-
 
 st.set_page_config(page_title="406 Not Acceptable", layout="wide")
 st.title("Monthly Calendar")
@@ -80,28 +76,36 @@ for week_row in cal:
             cols[i].write("")
         else:
             curr_date_str = str(date(st.session_state.view_year, st.session_state.view_month, day))
-            entries = lookup_map.get(curr_date_str,[])
+
+            ORDER_MAP = {"memo": 1, "todo": 2, "done": 3}
+            entries = sorted(lookup_map.get(curr_date_str, []), key=lambda x: ORDER_MAP.get(x['status'], 4))
+
             has_entries = len(entries) > 0
             bg_color = "#F8F9FA" if has_entries else "#FFFFFF"
-
             u_key = f"{st.session_state.view_year}_{st.session_state.view_month}_{day}"
 
             with cols[i].container(border=True, height=140):
 
                 st.markdown(f"""
-                           <div style="font-size: 14px; font-weight: bold; background-color:{bg_color}";
+                           <div style="font-weight: bold; background-color:{bg_color};
                            padding: 5px; border-radius: 5px;">
                                 {day}
                            </div>
                            """, unsafe_allow_html=True)
 
                 for entry in entries:
-                    st.write(entry)
                     status_color = get_status_color(entry['status'])
+                    st.markdown(f"""
+                        <div style="background-color:{status_color}; padding: 1px 5px; border-radius: 10px;
+                            font-size: 12px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            {entry['content'][:20]}
+                        </div>
+                    """, unsafe_allow_html=True)
 
                 with st.popover("+"):
                     st.write(f"### {curr_date_str}")
                     st.subheader("Add New")
+
                     new_status = st.selectbox("Status", ["todo", "done", "memo"], key = f"s_new_{u_key}")
                     new_content = st.text_input("Details", key=f"c_new_{u_key}")
 
@@ -112,20 +116,24 @@ for week_row in cal:
                     st.divider()
 
                     if entries:
-                        st.subheader("Existing Entries")
                         for entry in entries:
-                            col_txt, col_del = st.columns([4, 1])
-                            entry_id = entry.get('id')
-                            with col_txt:
-                                st.write(f"**{entry['status']}**: {entry['content']}")
-                            with col_del:
-                                if entry_id:
-                                    if st.button("🗑️", key=f"del_{entry['id']}"):
-                                        delete_calendar_entry(entry['id'])
-                                        st.rerun()
-                                else:
-                                    st.warning("NO ID found")
+                            col_txt, col_act = st.columns([3, 2])
+                            col_txt.write(f"{entry['status']}: {entry['content'][:20]}")
 
+                            with col_act:
+                                if st.button("🗑️", key=f"del_{entry['id']}"):
+                                    delete_calendar_entry(entry['id'])
+                                    st.rerun()
+
+                                if entry['status'] == 'todo':
+                                    if st.button("✅", key=f"done_{entry['id']}"):
+                                        update_entry_status(entry['id'], 'done')
+                                        st.rerun()
+
+                                if entry['status']== 'done':
+                                    if st.button("↺", key=f"todo_{entry['id']}"):
+                                        update_entry_status(entry['id'], 'todo')
+                                        st.rerun()
 
 
 
