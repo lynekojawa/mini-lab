@@ -1,14 +1,20 @@
-#Today(4/28) We are going to finish this
-#1. cannot put more than 2 inputs Not yetV
-#2. make sure I can use this in personal storage(private0
-#3. Check SQL, Monthly calendar, db mangerV
-#4. Adding organizer=1.memo 2. to-do 3. done in order plus changing to-do to done
+#Today(4/29) TEST PWA
 
 import streamlit as st
 import calendar
 from db_manager import fetch_calendar_state, get_db_client, add_calendar_entry, delete_calendar_entry, update_entry_status
 from datetime import date
 from collections import defaultdict
+
+def inject_pwa():
+    st.markdown("""
+    <link rel="manifest" href="path/to/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="MyCalendar">
+    """, unsafe_allow_html=True)
+
+inject_pwa()
 
 if 'view_month' not in st.session_state:
     st.session_state.view_month = date.today().month
