@@ -2,9 +2,15 @@
 
 import streamlit as st
 import calendar
-from db_manager import fetch_calendar_state, get_db_client, add_calendar_entry, delete_calendar_entry, update_entry_status
+from db_manager import fetch_calendar_state, add_calendar_entry, delete_calendar_entry, update_entry_status
 from datetime import date
 from collections import defaultdict
+
+st.set_page_config(
+    page_title="My Calendar",
+    page_icon="static/icon.png",  # <--- 이 줄이 핵심! Streamlit이 기본 로고 대신 사령관님 셀카를 쓰게 함
+    layout="wide"
+)
 
 def inject_pwa():
     st.markdown("""
