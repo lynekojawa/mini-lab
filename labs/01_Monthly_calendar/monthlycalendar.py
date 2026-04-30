@@ -6,21 +6,6 @@ from db_manager import fetch_calendar_state, add_calendar_entry, delete_calendar
 from datetime import date
 from collections import defaultdict
 
-st.set_page_config(
-    page_title="My Calendar",
-    page_icon="static/icon.png",  # <--- 이 줄이 핵심! Streamlit이 기본 로고 대신 사령관님 셀카를 쓰게 함
-    layout="wide"
-)
-
-def inject_pwa():
-    st.markdown("""
-    <link rel="manifest" href="path/to/manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="MyCalendar">
-    """, unsafe_allow_html=True)
-
-inject_pwa()
 
 if 'view_month' not in st.session_state:
     st.session_state.view_month = date.today().month
