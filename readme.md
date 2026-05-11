@@ -30,5 +30,5 @@ Language: Python <br>
 Database: SQL
 
 ## 🚀 Current Status & Next Steps
-01_Monthly_calendar: Completed (My First deep dive into cloud/Auth & UX Challenges)
+01_Monthly_calendar: Completed (My First deep dive into cloud/Auth & UX Challenges)<br> 
 02_Water_Tracker: Initialized, In progress
