@@ -1,2 +1,9 @@
 **/secrets.toml
 __pycache__/
+
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.xcuserdatad/
+*.xcscmblueprint
+.DS_Store
