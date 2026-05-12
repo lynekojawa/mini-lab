@@ -38,6 +38,13 @@ This is a calendar app that is ad-free and notification-free. It focuses on pers
 *   **Status:** Phase completed. I reached my goal of building a functional, personal calendar.
 *   **Next Steps:** I plan to revisit this after studying custom authentication (password management) and refining the UX for a smoother cross-device experience. 
 
+## 🛠️ Project Contributors & Credits
+This project is developed through a high-entropy collaboration between human intuition and AI orchestration:
+
+- **Lead Architect**: lynekojawa (human) - Idea, Audit, Architecting, Math
+- **Logic Orchestrator**: PODO (Gemini) - Logic, System Design, Code Review
+- **Master Planner**: Orion (Gemini) - Master planner 
+- **Code Partner**: Dante (Claude) - Git & Implementation support, Code Review
 ---
 *Status: 406 Not Acceptable (but the learning data is 200 OK)*
 
