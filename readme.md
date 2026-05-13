@@ -21,7 +21,7 @@ Mini-labs/
     ├── 01_Monthly_Calendar/
     │   ├── db_manager.py
     │   └── monthly_calendar.py
-    └── 02_Coming_Soon/
+    └── 02_404_Water_tracker/
 ```
 
 ## 💻 Technical Stack
@@ -30,5 +30,5 @@ Language: Python <br>
 Database: SQL
 
 ## 🚀 Current Status & Next Steps
-01_Monthly_calendar: Completed (My First deep dive into cloud/Auth & UX Challenges)
-02_Coming_Soon: TBD
+01_Monthly_calendar: Completed (My First deep dive into cloud/Auth & UX Challenges)<br> 
+02_Water_Tracker: Initialized, In progress
