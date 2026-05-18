@@ -11,7 +11,8 @@ import SwiftUI
 struct _2_404_water_trackerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let mockRepository = MockWaterRepository()
+            WaterTrackingViews(repository: mockRepository)
         }
     }
 }
